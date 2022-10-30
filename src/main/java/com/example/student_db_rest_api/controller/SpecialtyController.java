@@ -1,42 +1,42 @@
 package com.example.student_db_rest_api.controller;
 
+import com.example.student_db_rest_api.controller.api.SpecialtyControllerApi;
 import com.example.student_db_rest_api.domain.model.SpecialtyDto;
 import com.example.student_db_rest_api.service.SpecialtyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/specialties")
 @RequiredArgsConstructor
-public class SpecialtyController {
+public class SpecialtyController implements SpecialtyControllerApi {
 
     private final SpecialtyService service;
 
-    @GetMapping("/{id}")
-    public SpecialtyDto getById(@PathVariable String id) {
+    @Override
+    public SpecialtyDto getById(String id) {
         return service.getById(UUID.fromString(id));
     }
 
-    @GetMapping
+    @Override
     public Collection<SpecialtyDto> getAll() {
         return service.getAll();
     }
 
-    @PostMapping
-    public void create(@RequestBody SpecialtyDto request) {
+    @Override
+    public void create(SpecialtyDto request) {
         service.create(request);
     }
 
-    @PutMapping
-    public void update(@RequestBody SpecialtyDto request, @PathVariable String id) {
+    @Override
+    public void update(SpecialtyDto request,String id) {
         service.update(request, UUID.fromString(id));
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
+    @Override
+    public void delete(String id) {
         service.delete(UUID.fromString(id));
     }
 }
